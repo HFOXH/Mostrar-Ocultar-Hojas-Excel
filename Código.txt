@@ -1,0 +1,17 @@
+Dim DirLink As String   'DIRECCION DEL HIPERVINCULO SELECCIONADO
+ 
+Private Sub Workbook_SheetFollowHyperlink(ByVal Sh As Object, ByVal Target As Hyperlink)
+    Sheets("PARAMETROS").Activate
+       DirLink = ActiveCell.Hyperlinks(1).SubAddress
+       DirLink = Left(DirLink, InStr(1, DirLink, "!", vbTextCompare) - 1)
+    
+       If Sheets(DirLink).Visible = False Then
+           Sheets(DirLink).Visible = True
+           Sheets(DirLink).Activate
+           Sheets(DirLink).Range("A1").Select
+       End If
+End Sub
+ 
+Private Sub Workbook_SheetDeactivate(ByVal Sh As Object)
+    If Sh.Name <> "PARAMETROS" Then Sheets(Sh.Name).Visible = False
+End Sub
